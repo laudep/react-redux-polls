@@ -131,18 +131,18 @@ export function _getQuestions () {
   })
 }
 
-function formatQuestion ({ optionOneText, optionTwoText, author }) {
+function formatQuestion ({ optionOne, optionTwo, author }) {
   return {
     id: generateUID(),
     timestamp: Date.now(),
     author,
     optionOne: {
       votes: [],
-      text: optionOneText,
+      text: optionOne,
     },
     optionTwo: {
       votes: [],
-      text: optionTwoText,
+      text: optionTwo,
     }
   }
 }

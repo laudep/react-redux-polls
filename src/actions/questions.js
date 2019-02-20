@@ -1,5 +1,5 @@
 import { handleInitialData } from "./shared";
-import { saveQuestionAnswer } from "../utils/api";
+import { saveQuestionAnswer, saveQuestion } from "../utils/api";
 import { hideLoading, showLoading } from "react-redux-loading";
 
 export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
@@ -26,6 +26,21 @@ export function handleQuestionAnswer(id, answer) {
     const { authedUser } = getState();
     dispatch(showLoading());
     return saveQuestionAnswer(authedUser, id, answer).then(() => {
+      dispatch(handleInitialData());
+      dispatch(hideLoading());
+    });
+  };
+}
+
+export function handleQuestionAddition(optionOneText, optionTwoText) {
+  return (dispatch, getState) => {
+    const { authedUser } = getState();
+    dispatch(showLoading());
+    return saveQuestion({
+      optionOne: optionOneText,
+      optionTwo: optionTwoText,
+      author: authedUser
+    }).then(() => {
       dispatch(handleInitialData());
       dispatch(hideLoading());
     });
