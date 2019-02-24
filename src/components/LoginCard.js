@@ -46,6 +46,7 @@ class LoginCard extends Component {
               <DropdownButton variant="dark" title="Select a user">
                 {Object.values(this.props.users).map(user => (
                   <Dropdown.Item
+                    key={user.id}
                     eventKey={user.id}
                     onSelect={this.handleUserSelect}
                   >
