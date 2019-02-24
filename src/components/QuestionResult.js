@@ -14,7 +14,7 @@ import { FaStar } from "react-icons/fa";
 const QuestionResult = props => {
   const { author } = props;
   return (
-    <Card bsStyle="primary" className="QuestionResult">
+    <Card className="question-result">
       <Card.Body>
         <Card.Header as="h5">Asked by {author.name}</Card.Header>
 
@@ -42,7 +42,7 @@ const resultsListGroup = props => {
     question.optionOne.votes.length + question.optionTwo.votes.length;
 
   const votedBadge = (
-    <Badge variant="success">
+    <Badge variant="dark">
       <FaStar /> Your vote
     </Badge>
   );
@@ -60,7 +60,7 @@ const resultsListGroup = props => {
       <ListGroupItem variant={props.voted ? "secondary" : ""}>
         {props.voted ? votedBadge : null}
         <p>Would you rather {props.option.text}</p>
-        <ProgressBar now={(props.option.votes.length / totalVotes) * 100} />
+        <ProgressBar variant="dark" now={(props.option.votes.length / totalVotes) * 100} />
         <VoteCountBadge count={props.option.votes.length} />
       </ListGroupItem>
     );

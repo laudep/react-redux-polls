@@ -1,37 +1,54 @@
 import React, { Component, Fragment } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
+import LoadingBar from "react-redux-loading-bar";
 import { connect } from "react-redux";
-import LoadingBar from 'react-redux-loading'
 import { handleInitialData } from "../actions/shared";
+import Navigation from "./Navigation";
 import Dashboard from "./Dashboard";
-import Nav from "./Nav";
 import NewQuestion from "./NewQuestion";
 import Leaderboard from "./Leaderboard";
-
+import QuestionWrapper from "./QuestionWrapper";
+import LoginCard from "./LoginCard";
+import NotFound from "./NotFound";
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData());
   }
 
+  getRoutes = loggedIn => (
+    <Switch>
+      <Route exact path="/" component={loggedIn ? Dashboard : LoginCard} />
+      {loggedIn && (
+        <Fragment>
+          <Route exact path="/add" component={NewQuestion} />
+          <Route exact path="/leaderboard" component={Leaderboard} />
+          <Route
+            exact
+            path="/questions/:question_id"
+            component={QuestionWrapper}
+          />
+        </Fragment>
+      )}
+      {loggedIn && <Route component={NotFound} />};
+      <Redirect from="*" to="/" />
+    </Switch>
+  );
+
   render() {
     return (
       <Router>
         <Fragment>
-          <LoadingBar />
+          <LoadingBar className="loading" />
           <div className="container">
-            <Nav />
-            {this.props.loading === true ? null : (
-              <div>
-                <Route exact path="/" component={Dashboard} />
-                <Route exact path="/new" component={NewQuestion} />
-                <Route exact path="/leaderboard" component={Leaderboard} />
-                <Route
-                  exact
-                  path="/questions/:question_id"
-                  component={NewQuestion}
-                />
-              </div>
-            )}
+            <Navigation />
+            {this.props.loading === true
+              ? null
+              : this.getRoutes(this.props.loggedIn)}
           </div>
         </Fragment>
       </Router>
@@ -39,17 +56,13 @@ class App extends Component {
   }
 }
 
-export function isEmpty(obj) {
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) return false;
-  }
-  return true;
-}
-
-function mapStateToProps({ authedUser }) {
+function mapStateToProps({ authedUser, questions, users }) {
+  console.log("User: ", authedUser);
   return {
-    loading: authedUser === null
-  }
+    loading: !questions,
+    currentUser: users[authedUser],
+    loggedIn: !!authedUser
+  };
 }
 
 export default connect(mapStateToProps)(App);

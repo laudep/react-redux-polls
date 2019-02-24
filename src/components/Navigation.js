@@ -43,7 +43,7 @@ class Navigation extends Component {
               <LinkContainer to="/add">
                 <Nav.Link>New poll</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/Leaderboard">
+              <LinkContainer to="/leaderboard">
                 <Nav.Link>Leaderboard</Nav.Link>
               </LinkContainer>
               {this.getProfileNav()}

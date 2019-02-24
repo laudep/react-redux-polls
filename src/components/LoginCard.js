@@ -36,7 +36,7 @@ class LoginCard extends Component {
     return (
       <Row className="justify-content-md-center">
         <Card border="dark" className="login-card">
-          <Card.Header className="bg-dark text-white">
+          <Card.Header as="h5" className="bg-dark text-white">
             <FaUser />
              Log In
           </Card.Header>
