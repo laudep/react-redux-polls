@@ -54,8 +54,6 @@ const QuestionWrapper = ({
 };
 
 function mapStateToProps({ users, questions, authedUser }, props) {
-  console.log(authedUser);
-  console.log(!authedUser);
   if (!authedUser) return { loggedIn: false };
   const question = questions[props.match.params.question_id];
   if (!question) return { notFound: true };

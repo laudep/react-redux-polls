@@ -10,7 +10,7 @@ import {
   ToggleButton
 } from "react-bootstrap";
 import { connect } from "react-redux";
-import * as actions from "../actions/questions";
+import { handleQuestionAnswer } from "../actions/shared";
 
 class QuestionAnswer extends Component {
   state = {
@@ -18,14 +18,9 @@ class QuestionAnswer extends Component {
     submitDisabled: true
   };
 
-
   handleAnswerClick = function(answer) {
-    const { answerQuestion, authedUser, question } = this.props;
-    answerQuestion(
-      authedUser,
-      question.id,
-      answer
-    );
+    const { dispatch, authedUser, question } = this.props;
+    dispatch(handleQuestionAnswer(authedUser, question.id, answer));
   };
 
   handleChange = value => {
@@ -81,7 +76,9 @@ class QuestionAnswer extends Component {
                 <Button
                   disabled={this.state.submitDisabled}
                   variant="dark"
-                  onClick={event => this.handleAnswerClick(this.state.selection)}
+                  onClick={event =>
+                    this.handleAnswerClick(this.state.selection)
+                  }
                 >
                   Submit
                 </Button>
@@ -98,4 +95,4 @@ function mapStateToProps({ authedUser }) {
   return { authedUser };
 }
 
-export default connect(mapStateToProps, actions)(QuestionAnswer);
+export default connect(mapStateToProps)(QuestionAnswer);

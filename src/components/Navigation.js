@@ -4,6 +4,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
 import { FaPoll } from "react-icons/fa";
+
 class Navigation extends Component {
   logout = e => {
     e.preventDefault();
@@ -19,11 +20,7 @@ class Navigation extends Component {
         </span>
       }
     >
-      <NavDropdown.Item 
-      // href="/" 
-      onClick={this.logout}>
-        Logout
-      </NavDropdown.Item>
+      <NavDropdown.Item onClick={this.logout}>Logout</NavDropdown.Item>
     </NavDropdown>
   );
 

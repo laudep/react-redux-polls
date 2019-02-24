@@ -5,6 +5,8 @@ import { hideLoading, showLoading } from "react-redux-loading-bar";
 export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
 export const ADD_QUESTION = "ADD_QUESTION";
 export const ANSWER_QUESTION = "ANSWER_QUESTION";
+export const SAVE_POLL_VOTE = "SAVE_POLL_VOTE";
+export const REMOVE_POLL_VOTE = "REMOVE_POLL_VOTE";
 
 export function receiveQuestions(questions) {
   return {
@@ -15,6 +17,24 @@ export function receiveQuestions(questions) {
 export function answerQuestion(authedUser, id, answer) {
   return {
     type: ANSWER_QUESTION,
+    authedUser,
+    id,
+    answer
+  };
+}
+
+export function savePollVote(authedUser, id, answer) {
+  return {
+    type: SAVE_POLL_VOTE,
+    authedUser,
+    id,
+    answer
+  };
+}
+
+export function removePollVote(authedUser, id, answer) {
+  return {
+    type: REMOVE_POLL_VOTE,
     authedUser,
     id,
     answer

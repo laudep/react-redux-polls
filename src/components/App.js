@@ -57,7 +57,6 @@ class App extends Component {
 }
 
 function mapStateToProps({ authedUser, questions, users }) {
-  console.log("User: ", authedUser);
   return {
     loading: !questions,
     currentUser: users[authedUser],

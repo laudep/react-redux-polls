@@ -1,7 +1,8 @@
 import {
   RECEIVE_QUESTIONS,
   ADD_QUESTION,
-  ANSWER_QUESTION
+  SAVE_POLL_VOTE,
+  REMOVE_POLL_VOTE
 } from "../actions/questions";
 
 export default function questions(state = null, action) {
@@ -11,7 +12,7 @@ export default function questions(state = null, action) {
         ...state,
         ...action.questions
       };
-    case ANSWER_QUESTION:
+    case SAVE_POLL_VOTE:
       return {
         ...state,
         [action.id]: {
@@ -20,6 +21,19 @@ export default function questions(state = null, action) {
             ...state[action.id][action.answer],
             votes: state[action.id][action.answer].votes.concat(
               action.authedUser
+            )
+          }
+        }
+      };
+    case REMOVE_POLL_VOTE:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          [action.answer]: {
+            ...state[action.id][action.answer],
+            votes: state[action.id][action.answer].votes.filter(
+              vote => vote !== action.authedUser
             )
           }
         }
