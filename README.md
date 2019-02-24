@@ -1,68 +1,146 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Would You Rather
 
-## Available Scripts
+This project is a simple version of the game *"Would You Rather?"*.  
+Built using React and Redux, it was developed as a project for the [Udacity React Nanodegree Program](https://www.udacity.com/course/react-nanodegree--nd019).
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+- [Demo](#demo)
+- [Installation](#running-the-application)
+- [Database and API](#database)
+  - [Users](#users)
+  - [Questions](#questions)
+  - [Voting Options](#voting-options)
+  - [Database Access](#database-access)
+    - [`_getUsers()`](#get-users)
+    - [`_getQuestions()`](#get-questions)
+    - [`_saveQuestion(question)`](#save-question)
+    - [`_saveQuestionAnswer(object)`](#save-question-answer)
+- [Create React App](#create-react-app)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Demo
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+An online demo can be found here: [react-redux-polls.surge.sh](https://react-redux-polls.surge.sh/)
 
-### `npm test`
+## Running the application
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Make sure to have [Node.js](https://nodejs.org/en/) installed.  
+Clone the project, install the dependencies and run the development server:
 
-### `npm run build`
+```
+git clone https://github.com/laudep/react-redux-polls.git
+npm install
+npm start
+```
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+A new browser window will open automatically.  
+By default, the app runs in [http://localhost:3000/](http://localhost:3000/).
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+![MyReads screenshot](screenshots/bookshelf_overview.png "App sceenshot")
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Database
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This project utilizes a fake database with access methods provided by Udacity for practicality reasons. An API wrapper was written for convenient handling.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [`getAll`](#getall)
+- [`update`](#update)
+- [`search`](#search)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+There are two types of objects stored in the 'database':
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+* Users
+* Questions
 
-## Learn More
+### Users
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Users include:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+| Attribute    | Type             | Description           |
+|-----------------|------------------|-------------------         |
+| id                 | String           | The user’s unique identifier |
+| name          | String           | The user’s first name  and last name     |
+| avatarURL  | String           | The path to the image file |
+| questions | Array | A list of ids of the polling questions this user created|
+| answers      | Object         |  The object's keys are the ids of each question this user answered. The value of each key is the answer the user selected. It can be either `'optionOne'` or `'optionTwo'` since each question has two options.
 
-### Code Splitting
+### Questions
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Questions include:
 
-### Analyzing the Bundle Size
+| Attribute | Type | Description |
+|-----------------|------------------|-------------------|
+| id                  | String | The question’s unique identifier |
+| author        | String | The author’s unique identifier |
+| timestamp | String | The time when the question was created|
+| optionOne | Object | The first voting option|
+| optionTwo | Object | The second voting option|
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### Voting Options
 
-### Making a Progressive Web App
+Voting options are attached to questions. They include:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+| Attribute | Type | Description |
+|-----------------|------------------|-------------------|
+| votes             | Array | A list that contains the id of each user who voted for that option|
+| text                | String | The text of the option |
 
-### Advanced Configuration
+### Database Access
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+The code talks to the database via 4 methods:
 
-### Deployment
+* `_getUsers()`
+* `_getQuestions()`
+* `_saveQuestion(question)`
+* `_saveQuestionAnswer(object)`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+<a name="get-users"/>
+1) `_getUsers()` Method (#get-users)
 
-### `npm run build` fails to minify
+*Description*: Get all of the existing users from the database.  
+*Return Value*: Object where the key is the user’s id and the value is the user object.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<a name="get-questions"/>
+2) `_getQuestions()` Method
+
+*Description*: Get all of the existing questions from the database.  
+*Return Value*: Object where the key is the question’s id and the value is the question object.
+
+<a name="save-question"/>
+3) `_saveQuestion(question)` Method
+
+*Description*: Save the polling question in the database.  
+*Parameters*:  Object that includes the following properties: `author`, `optionOneText`, and `optionTwoText`. More details about these properties:
+
+| Attribute | Type | Description |
+|-----------------|------------------|-------------------|
+| author | String | The id of the user who posted the question|
+| optionOneText| String | The text of the first option |
+| optionTwoText | String | The text of the second option |
+
+*Return Value*:  An object that has the following properties: `id`, `author`, `optionOne`, `optionTwo`, `timestamp`. More details about these properties:
+
+| Attribute | Type | Description |
+|-----------------|------------------|-------------------|
+| id | String | The id of the question that was posted|
+| author | String | The id of the user who posted the question|
+| optionOne | Object | The object has a text property and a votes property, which stores an array of the ids of the users who voted for that option|
+| optionTwo | Object | The object has a text property and a votes property, which stores an array of the ids of the users who voted for that option|
+|timestamp|String | The time when the question was created|
+
+<a name="save-question-answer"/>
+4) `_saveQuestionAnswer(object)` Method
+
+*Description*: Save the answer to a particular polling question in the database.
+*Parameters*: Object that contains the following properties: `authedUser`, `qid`, and `answer`. More details about these properties:
+
+| Attribute | Type | Description |
+|-----------------|------------------|-------------------|
+| authedUser | String | The id of the user who answered the question|
+| qid | String | The id of the question that was answered|
+| answer | String | The option the user selected. The value should be either `"optionOne"` or `"optionTwo"`|
+
+## Create React App
+
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find more
+information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
