@@ -1,6 +1,6 @@
 import { handleInitialData } from "./shared";
 import { saveQuestionAnswer, saveQuestion } from "../utils/api";
-import { hideLoading, showLoading } from "react-redux-loading";
+import { hideLoading, showLoading } from "react-redux-loading-bar";
 
 export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
 export const ADD_QUESTION = "ADD_QUESTION";
