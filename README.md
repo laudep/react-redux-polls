@@ -20,6 +20,8 @@ Built using React and Redux, it was developed as a project for the [Udacity Reac
 
 ## Demo
 
+[![Build Status](https://travis-ci.org/laudep/react-redux-polls.svg?branch=master)](https://travis-ci.org/laudep/react-redux-polls)
+
 An online demo can be found here: [react-redux-polls.surge.sh](https://react-redux-polls.surge.sh/)
 
 ## Running the application
@@ -35,8 +37,6 @@ npm start
 
 A new browser window will open automatically.  
 By default, the app runs in [http://localhost:3000/](http://localhost:3000/).
-
-![MyReads screenshot](screenshots/bookshelf_overview.png "App sceenshot")
 
 
 ## Database
@@ -95,7 +95,7 @@ The code talks to the database via 4 methods:
 * `_saveQuestionAnswer(object)`
 
 <a name="get-users"/>
-1) `_getUsers()` Method (#get-users)
+1) `_getUsers()` Method
 
 *Description*: Get all of the existing users from the database.  
 *Return Value*: Object where the key is the user’s id and the value is the user object.
