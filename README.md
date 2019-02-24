@@ -43,14 +43,10 @@ By default, the app runs in [http://localhost:3000/](http://localhost:3000/).
 
 This project utilizes a fake database with access methods provided by Udacity for practicality reasons. An API wrapper was written for convenient handling.
 
-- [`getAll`](#getall)
-- [`update`](#update)
-- [`search`](#search)
-
 There are two types of objects stored in the 'database':
 
-* Users
-* Questions
+* [Users](#users)
+* [Questions](#questions)
 
 ### Users
 
@@ -95,19 +91,22 @@ The code talks to the database via 4 methods:
 * `_saveQuestionAnswer(object)`
 
 <a name="get-users"/>
-1) `_getUsers()` Method
+
+1. `_getUsers()` Method
 
 *Description*: Get all of the existing users from the database.  
 *Return Value*: Object where the key is the user’s id and the value is the user object.
 
 <a name="get-questions"/>
-2) `_getQuestions()` Method
+
+2. `_getQuestions()` Method
 
 *Description*: Get all of the existing questions from the database.  
 *Return Value*: Object where the key is the question’s id and the value is the question object.
 
 <a name="save-question"/>
-3) `_saveQuestion(question)` Method
+
+3. `_saveQuestion(question)` Method
 
 *Description*: Save the polling question in the database.  
 *Parameters*:  Object that includes the following properties: `author`, `optionOneText`, and `optionTwoText`. More details about these properties:
@@ -129,7 +128,8 @@ The code talks to the database via 4 methods:
 |timestamp|String | The time when the question was created|
 
 <a name="save-question-answer"/>
-4) `_saveQuestionAnswer(object)` Method
+
+4. `_saveQuestionAnswer(object)` Method
 
 *Description*: Save the answer to a particular polling question in the database.
 *Parameters*: Object that contains the following properties: `authedUser`, `qid`, and `answer`. More details about these properties:
