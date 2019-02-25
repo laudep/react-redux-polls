@@ -14,7 +14,7 @@ import PrivateRoute from "./PrivateRoute";
 
 class App extends Component {
   componentDidMount() {
-    this.props.dispatch(handleInitialData());
+    this.props.initData();
   }
 
   render() {
@@ -48,6 +48,14 @@ class App extends Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    initData: () => {
+      return dispatch(handleInitialData());
+    }
+  };
+}
+
 function mapStateToProps({ authedUser, questions, users }) {
   return {
     loading: !questions,
@@ -56,4 +64,7 @@ function mapStateToProps({ authedUser, questions, users }) {
   };
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

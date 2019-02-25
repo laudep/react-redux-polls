@@ -21,9 +21,8 @@ class NewQuestion extends Component {
     e.preventDefault();
 
     const { optionOne, optionTwo } = this.state;
-    const { dispatch } = this.props;
 
-    dispatch(handleQuestionAddition(optionOne, optionTwo));
+    this.props.handleNewQuestion(optionOne, optionTwo);
 
     this.setState(() => ({
       optionOne: "",
@@ -71,7 +70,18 @@ class NewQuestion extends Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    handleNewQuestion: (optionOne, optionTwo) => {
+      return dispatch(handleQuestionAddition(optionOne, optionTwo));
+    }
+  };
+}
+
 function mapStateToProps({ authedUser }) {
   return { authedUser };
 }
-export default connect(mapStateToProps)(NewQuestion);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewQuestion);
