@@ -1,6 +1,5 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import QuestionAnswer from "./QuestionAnswer";
 import QuestionResult from "./QuestionResult";

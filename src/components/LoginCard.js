@@ -38,7 +38,6 @@ class LoginCard extends Component {
   };
 
   render() {
-    console.log(this.props);
     const { users, location } = this.props;
     const { from } = location.state || { from: { pathname: "/" } };
 
