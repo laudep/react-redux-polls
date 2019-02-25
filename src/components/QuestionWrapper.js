@@ -35,19 +35,12 @@ const QuestionWrapper = ({
   );
 
   /**
-   * Displays an alert for invalid polls
-   */
-  const invalidPoll = () => {
-    return <NotFound />;
-  };
-
-  /**
    * Displays either the result or answer view of the poll
    */
   const displayPoll = () =>
     optOneChosen || optTwoChosen ? displayPollResult() : displayPollToAnswer();
 
-  return <Card>{notFound ? invalidPoll() : displayPoll()}</Card>;
+  return <Card>{notFound ? <NotFound /> : displayPoll()}</Card>;
 };
 
 function mapStateToProps({ users, questions, authedUser }, props) {
