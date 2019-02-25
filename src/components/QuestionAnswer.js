@@ -19,8 +19,8 @@ class QuestionAnswer extends Component {
   };
 
   handleAnswerClick = function(answer) {
-    const { dispatch, authedUser, question } = this.props;
-    dispatch(handleQuestionAnswer(authedUser, question.id, answer));
+    const { handleAnswer, authedUser, question } = this.props;
+    handleAnswer(authedUser, question.id, answer);
   };
 
   handleChange = value => {
@@ -91,8 +91,19 @@ class QuestionAnswer extends Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    handleAnswer: (authedUser, id, answer) => {
+      dispatch(handleQuestionAnswer(authedUser, id, answer));
+    }
+  };
+}
+
 function mapStateToProps({ authedUser }) {
   return { authedUser };
 }
 
-export default connect(mapStateToProps)(QuestionAnswer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QuestionAnswer);
