@@ -32,7 +32,7 @@ class NewQuestion extends Component {
   };
 
   renderForm = () => (
-    <Card bsStyle="primary">
+    <Card>
       <Card.Header>
         <FaPencilAlt />
           Create New Question
