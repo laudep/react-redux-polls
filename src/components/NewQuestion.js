@@ -72,7 +72,7 @@ class NewQuestion extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    handleNewQuestion: (optionOne, optionTwo) => {
+    handleNewQuestion(optionOne, optionTwo) {
       return dispatch(handleQuestionAddition(optionOne, optionTwo));
     }
   };
