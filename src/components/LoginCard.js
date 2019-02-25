@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
 import {
@@ -16,7 +17,8 @@ class LoginCard extends Component {
   state = {
     imageSource: "../images/avatar_placeholder.png",
     selectedUser: null,
-    submitDisabled: true
+    submitDisabled: true,
+    loggedIn: false
   };
 
   handleUserSelect = id => {
@@ -29,10 +31,20 @@ class LoginCard extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.handleAuth(this.state.selectedUser);
+    this.props.handleLogin(this.state.selectedUser);
+    this.setState(() => ({
+      loggedIn: true
+    }));
   };
 
   render() {
+    console.log(this.props);
+    const { users, location } = this.props;
+    const { from } = location.state || { from: { pathname: "/" } };
+
+    const { loggedIn } = this.state;
+    if (loggedIn) return <Redirect to={from} />;
+
     return (
       <Row className="justify-content-md-center">
         <Card border="dark" className="login-card">
@@ -44,7 +56,7 @@ class LoginCard extends Component {
             <Image src={this.state.imageSource} />
             <Form onSubmit={this.handleSubmit}>
               <DropdownButton variant="dark" title="Select a user">
-                {Object.values(this.props.users).map(user => (
+                {Object.values(users).map(user => (
                   <Dropdown.Item
                     key={user.id}
                     eventKey={user.id}
@@ -73,8 +85,8 @@ class LoginCard extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    handleAuth: (userId) => {
-      dispatch(setAuthedUser(userId));
+    handleLogin: userId => {
+      return dispatch(setAuthedUser(userId));
     }
   };
 }
@@ -83,4 +95,7 @@ function mapStateToProps({ users }) {
   return { users };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginCard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginCard);
