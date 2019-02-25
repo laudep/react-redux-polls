@@ -6,9 +6,9 @@ import { setAuthedUser } from "../actions/authedUser";
 import { FaPoll } from "react-icons/fa";
 
 class Navigation extends Component {
-  logout = e => {
+  handleLogout = e => {
     e.preventDefault();
-    this.props.dispatch(setAuthedUser(null));
+    this.props.logout();
   };
 
   getProfileNav = () => (
@@ -20,7 +20,7 @@ class Navigation extends Component {
         </span>
       }
     >
-      <NavDropdown.Item onClick={this.logout}>Logout</NavDropdown.Item>
+      <NavDropdown.Item onClick={this.handleLogout}>Logout</NavDropdown.Item>
     </NavDropdown>
   );
 
@@ -52,6 +52,14 @@ class Navigation extends Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    logout: () => {
+      return dispatch(setAuthedUser(null));
+    }
+  };
+}
+
 function mapStateToProps({ authedUser, users }) {
   return {
     loggedIn: authedUser !== null,
@@ -60,4 +68,7 @@ function mapStateToProps({ authedUser, users }) {
   };
 }
 
-export default connect(mapStateToProps)(Navigation);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Navigation);
