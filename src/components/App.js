@@ -22,25 +22,6 @@ class App extends Component {
     this.props.dispatch(handleInitialData());
   }
 
-  getRoutes = loggedIn => (
-    <Switch>
-      <Route exact path="/" component={loggedIn ? Dashboard : LoginCard} />
-      {loggedIn && (
-        <Fragment>
-          <Route exact path="/add" component={NewQuestion} />
-          <Route exact path="/leaderboard" component={Leaderboard} />
-          <Route
-            exact
-            path="/questions/:question_id"
-            component={QuestionWrapper}
-          />
-        </Fragment>
-      )}
-      {loggedIn && <Route component={NotFound} />};
-      <Redirect from="*" to="/" />
-    </Switch>
-  );
-
   render() {
     return (
       <Router>
@@ -48,17 +29,23 @@ class App extends Component {
           <LoadingBar className="loading" />
           <Navigation />
           {this.props.loading === true ? null : (
-            <Switch>
-              <PrivateRoute path="/" exact component={Dashboard} />
-              <PrivateRoute path="/leaderboard" exact component={Leaderboard} />
-              <PrivateRoute path="/add" exact component={NewQuestion} />
-              <PrivateRoute
-                path="/questions/:question_id"
-                component={QuestionWrapper}
-              />
-              <Route path="/login" exact component={LoginCard} />
-              <Route component={NotFound} />
-            </Switch>
+            <div className="container">
+              <Switch>
+                <PrivateRoute path="/" exact component={Dashboard} />
+                <PrivateRoute
+                  path="/leaderboard"
+                  exact
+                  component={Leaderboard}
+                />
+                <PrivateRoute path="/add" exact component={NewQuestion} />
+                <PrivateRoute
+                  path="/questions/:question_id"
+                  component={QuestionWrapper}
+                />
+                <Route path="/login" exact component={LoginCard} />
+                <Route component={NotFound} />
+              </Switch>
+            </div>
           )}
         </Fragment>
       </Router>
