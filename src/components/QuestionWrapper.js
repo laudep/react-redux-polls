@@ -9,7 +9,6 @@ import NotFound from "./NotFound";
  * Wrapper component for viewing or answering individual polls
  */
 const QuestionWrapper = ({
-  loggedIn,
   question,
   author,
   optOneChosen,
@@ -52,7 +51,6 @@ const QuestionWrapper = ({
 };
 
 function mapStateToProps({ users, questions, authedUser }, props) {
-  if (!authedUser) return { loggedIn: false };
   const question = questions[props.match.params.question_id];
   if (!question) return { notFound: true };
   const author = users[question.author];
@@ -60,7 +58,6 @@ function mapStateToProps({ users, questions, authedUser }, props) {
   const optTwoChosen = question.optionTwo.votes.includes(authedUser);
 
   return {
-    loggedIn: true,
     notFound: false,
     question,
     author,
