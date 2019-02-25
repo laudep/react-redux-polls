@@ -57,7 +57,7 @@ class NewQuestion extends Component {
               onChange={this.handleChange}
             />
           </FormGroup>
-          <Button disabled={this.state.disabled} type="submit" bsStyle="info">
+          <Button disabled={this.state.disabled} type="submit" bs="info">
             Submit
           </Button>
         </Form>
