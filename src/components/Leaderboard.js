@@ -12,7 +12,7 @@ import {
 
 class Leaderboard extends Component {
   renderAuthorStats = (author, index) => (
-    <Card key={author.id} bsStyle="primary">
+    <Card key={author.id}>
       <Card.Header as="h5">
         <Badge variant="secondary" className="position">
           {index + 1}
