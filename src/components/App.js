@@ -15,6 +15,8 @@ import Leaderboard from "./Leaderboard";
 import QuestionWrapper from "./QuestionWrapper";
 import LoginCard from "./LoginCard";
 import NotFound from "./NotFound";
+import PrivateRoute from "./PrivateRoute";
+
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData());
@@ -44,12 +46,20 @@ class App extends Component {
       <Router>
         <Fragment>
           <LoadingBar className="loading" />
-          <div className="container">
-            <Navigation />
-            {this.props.loading === true
-              ? null
-              : this.getRoutes(this.props.loggedIn)}
-          </div>
+          <Navigation />
+          {this.props.loading === true ? null : (
+            <Switch>
+              <PrivateRoute path="/" exact component={Dashboard} />
+              <PrivateRoute path="/leaderboard" exact component={Leaderboard} />
+              <PrivateRoute path="/add" exact component={NewQuestion} />
+              <PrivateRoute
+                path="/questions/:question_id"
+                component={QuestionWrapper}
+              />
+              <Route path="/login" exact component={LoginCard} />
+              <Route component={NotFound} />
+            </Switch>
+          )}
         </Fragment>
       </Router>
     );
@@ -60,7 +70,7 @@ function mapStateToProps({ authedUser, questions, users }) {
   return {
     loading: !questions,
     currentUser: users[authedUser],
-    loggedIn: !!authedUser
+    loggedIn: authedUser !== null
   };
 }
 

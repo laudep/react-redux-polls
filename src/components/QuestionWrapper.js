@@ -40,7 +40,6 @@ const QuestionWrapper = ({
    * Displays an alert for invalid polls
    */
   const invalidPoll = () => {
-    if (!loggedIn) return <Redirect to="/" />;
     return <NotFound />;
   };
 
