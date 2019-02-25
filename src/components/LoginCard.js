@@ -29,7 +29,7 @@ class LoginCard extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.dispatch(setAuthedUser(this.state.selectedUser));
+    this.props.handleAuth(this.state.selectedUser);
   };
 
   render() {
@@ -71,8 +71,16 @@ class LoginCard extends Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    handleAuth: (userId) => {
+      dispatch(setAuthedUser(userId));
+    }
+  };
+}
+
 function mapStateToProps({ users }) {
   return { users };
 }
 
-export default connect(mapStateToProps)(LoginCard);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginCard);
