@@ -93,8 +93,8 @@ class QuestionAnswer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    handleAnswer: (authedUser, id, answer) => {
-      dispatch(handleQuestionAnswer(authedUser, id, answer));
+    handleAnswer(authedUser, id, answer) {
+      return dispatch(handleQuestionAnswer(authedUser, id, answer));
     }
   };
 }
