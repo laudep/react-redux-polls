@@ -11,8 +11,7 @@ import {
 } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
 
-const QuestionResult = props => {
-  const { author } = props;
+const QuestionResult = ({ author, ...rest }) => {
   return (
     <Card className="question-result">
       <Card.Body>
@@ -29,15 +28,14 @@ const QuestionResult = props => {
               />
             </div>
           </Col>
-          <Col xs={9}>{resultsListGroup(props)}</Col>
+          <Col xs={9}>{resultsListGroup({ ...rest })}</Col>
         </Row>
       </Card.Body>
     </Card>
   );
 };
 
-const resultsListGroup = props => {
-  const { question, optOne, optTwo } = props;
+const resultsListGroup = ({ question, optOne, optTwo }) => {
   const totalVotes =
     question.optionOne.votes.length + question.optionTwo.votes.length;
 
@@ -47,21 +45,24 @@ const resultsListGroup = props => {
     </Badge>
   );
 
-  const VoteCountBadge = props => (
+  const VoteCountBadge = ({ count }) => (
     <div className="vote-summary">
       <Badge pill variant="secondary">
-        {props.count} out of {totalVotes} votes
+        {count} out of {totalVotes} votes
       </Badge>
     </div>
   );
 
-  const OptionResult = props => {
+  const OptionResult = ({ voted, option }) => {
     return (
-      <ListGroupItem variant={props.voted ? "secondary" : ""}>
-        {props.voted ? votedBadge : null}
-        <p>Would you rather {props.option.text}</p>
-        <ProgressBar variant="dark" now={(props.option.votes.length / totalVotes) * 100} />
-        <VoteCountBadge count={props.option.votes.length} />
+      <ListGroupItem variant={voted ? "secondary" : ""}>
+        {voted ? votedBadge : null}
+        <p>Would you rather {option.text}</p>
+        <ProgressBar
+          variant="dark"
+          now={(option.votes.length / totalVotes) * 100}
+        />
+        <VoteCountBadge count={option.votes.length} />
       </ListGroupItem>
     );
   };
